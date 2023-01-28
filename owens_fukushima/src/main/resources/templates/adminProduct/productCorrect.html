@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<title>商品修正</title>
+</head>
+<body>
+<div align="center">
+<form th:action="@{/product-correct}" th:object="${productCorrectForm}" method="post">
+	<h1>商品修正</h1>
+	<h4><span>※</span>は必須項目です</h4>
+	<!-- エラー表示 -->
+	<p th:errors="*{all}" class="error-messages"></p>
+	<table>
+		<tr>
+			<td>商品ID</td>
+			<td><span th:text="*{productId}"></span></td>
+		<tr>
+			<td class="relative1">商品名</td>
+			<td><span th:text="*{productName}"  class="my-xl-3 "></span></td>
+		</tr>
+		<tr>
+			<td class="relative2">価格<span class="red">※</span></td>
+			<td><input type="number" th:field="*{price}"  min="0" max="999999999" size="5" class="mb-xl-3"></td>
+		</tr>
+
+		<tr>
+			<td class="relative3">ジャンル</td>
+			<td><span th:text="*{genreName}"></span></td>
+		</tr>
+		<tr>
+			<td class="relative4">在庫数<span class="red">※</span></td>
+			<td><input type="number" th:field="*{quantity}" maxlength="3" min ="1" max="999" class="mt-xl-3"></td>
+		</tr>
+	</table>
+
+		<input type="submit" name="backList" value="一覧" class="btn btn-warning mt-xl-4  me-xl-2">
+		<input type="submit" name="check" value="確認" class="btn btn-warning mt-xl-4  ms-xl-2">
+	</form>
+</div>
+</body>
+</html>

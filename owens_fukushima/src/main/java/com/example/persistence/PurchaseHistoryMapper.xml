@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.persistence.PurchaseHistoryMapper">
+	<!-- 商品購入時(単品) -->
+	<insert id="insertHistory">
+	INSERT INTO purchase_history (user_id, product_name, price, purchase_qty, purchase_datetime)
+	VALUES (#{userId}, #{p.productName}, #{p.price}, #{p.purchaseQty}, CURRENT_TIME())
+	</insert>
+
+	<!-- 商品購入時(まとめ買い) -->
+	<insert id="insertCartHistory">
+	INSERT INTO purchase_history (user_id, product_name, price, purchase_qty, purchase_datetime)
+	VALUES (#{userId}, #{p.productName}, #{p.price}, #{p.purchaseQty}, CURRENT_TIME())
+	</insert>
+
+	<!-- 購入履歴 -->
+	<select id="selectPurchaseHistory" resultType="com.example.domain.ProductInfo">
+	SELECT
+		purchase_id,
+		product_name,
+		price,
+		purchase_qty,
+		purchase_datetime
+	FROM purchase_history
+	WHERE user_id = #{userId}
+	ORDER BY purchase_datetime DESC
+	</select>
+
+	<!-- 削除確認 -->
+	<select id="selectIdMatchHistory" resultType="com.example.domain.ProductInfo">
+	SELECT
+	    purchase_id,
+		product_name,
+		price,
+		purchase_qty,
+		purchase_datetime
+	FROM purchase_history
+	WHERE purchase_id = #{purchaseId}
+	</select>
+
+	<!-- 購入履歴削除 -->
+	<delete id="deletePurchaseHistory">
+	DELETE FROM purchase_history WHERE purchase_id = #{purchaseId}
+	</delete>
+
+</mapper>

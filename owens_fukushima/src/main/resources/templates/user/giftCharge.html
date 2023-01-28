@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<title>ギフト券チャージ画面</title>
+</head>
+<body>
+<!-- ヘッダー部 -->
+<form th:action="@{/header}" method="post">
+	<input type="submit" name="logout" value="ログアウト" class="btn btn-danger">
+	<span class="gift-text-position">ギフト券残高\<span th:text="${giftAmount}" class="green"></span></span>
+	<input type="submit" name="gift" value="ギフト券" class="btn btn-warning gift-button-position">
+	<input type="submit" name="cart" value="カート" class="btn btn-warning cart-button-position">
+</form>
+
+<div align="center">
+<h1>ギフト券チャージ</h1>
+<h4 class="red">チャージする金額を選択してください</h4>
+<form th:action="@{/gift-charge}"  method="post">
+<span th:text="${amount}"></span>
+<!-- エラーメッセージ -->
+<div th:if="${errorList} != null ">
+	<span th:each="errorMsg : *{errorList}" >
+		<span th:text="${errorMsg}" class="error-messages"></span><br>
+	</span>
+</div>
+	<table>
+		<tr><td><input type="radio" name="chargeAmount" value="1500"><span class="charge-amount-position">1500</span></td></tr>
+		<tr><td><input type="radio" name="chargeAmount" value="3000"><span class="charge-amount-position">3000</span></td></tr>
+		<tr><td><input type="radio" name="chargeAmount" value="5000"><span class="charge-amount-position">5000</span></td></tr>
+		<tr><td><input type="radio" name="chargeAmount" value="15000"><span class="charge-amount-position">15000</span></td></tr>
+	</table>
+	<input type="submit" name="menu" value="メニューへ" class="btn btn-warning mt-xl-3 me-xl-2">
+	<input type="submit" name="charge" value="チャージ" class="btn btn-warning mt-xl-3 ms-xl-2">
+</form>
+</div>
+
+</body>
+</html>

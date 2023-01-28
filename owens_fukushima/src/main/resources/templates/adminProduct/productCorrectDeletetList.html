@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/product-correct.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<title>商品修正リスト</title>
+</head>
+<body>
+<div align="center">
+<h1>商品一覧</h1>
+	<p th:if="${productList.size()} == 0" class="not-data pt-xl-4">
+		商品情報がありません
+	</p>
+
+		<div th:if="${productList.size()} != 0">
+		<table class="border">
+				<tr>
+					<th>商品名</th>
+					<th>価格</th>
+					<th>在庫数</th>
+					<th>ジャンル</th>
+					<th></th>
+				</tr>
+				<tr th:each="product : ${productList}">
+					<td><span th:text="${product.productName}"></span></td>
+					<td><span th:text="${product.price}"></span>円</td>
+					<td><span th:text="${product.quantity}"></span></td>
+					<td><span th:text="${product.genreName}"></span></td>
+
+					<td><form th:action="@{/product-correct-delete}" method="post">
+							<input type="submit" name="correct" value="修正" class="btn btn-warning">
+							<input type="submit" name="delete" value="削除" class="btn btn-primary">
+							<!-- 商品IDを渡す -->
+							<input type="hidden" name="productId" th:value="${product.productId}">
+							<!-- バージョン番号を渡す -->
+							<input type="hidden" name="versionNumber" th:value="${product.versionNumber}">
+					    </form>
+			    	</td>
+				</tr>
+		</table>
+		</div>
+
+		<form th:action = "@{/back-product-list}" method="post">
+			<input type="submit" name= "backAdminMenu" value="メニューへ" class="btn btn-warning mt-xl-4">
+		</form>
+
+
+
+</div>
+
+</body>
+</html>

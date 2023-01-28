@@ -1,0 +1,113 @@
+@charset "UTF-8";
+
+.error-messages {
+	background-color : #FFFF00 ;
+	border: 1px solid #000;
+	text-align: left;
+	font-weight: bold;
+	padding-left: 10px;
+	width : 500px;
+	color: #FF0000;
+}
+
+h1{
+
+	color: #FFCC33;
+}
+
+.red{
+	color:red;
+}
+
+.pl{
+	padding-left : 400px;
+}
+
+.user-name{
+	font-size : 30px;
+	font-weight: bold;
+}
+
+.not-data{
+	font-size : 30px;
+	font-weight: bold;
+	color:red;
+}
+
+.gift-amount-color{
+	color:green;
+}
+
+input[type="checkbox"] {
+	width:			20px;
+	height:			20px;
+
+}
+
+input[type="select"]{
+	width:			50px;
+	height:			50px;
+}
+
+input[type="radio"] {
+	width:			20px;
+	height:			20px;
+
+}
+
+.pl{
+	padding-left: 190px;
+}
+
+.pl-2{
+	padding-left: 200px;
+}
+
+.pl-3{
+	padding-left:140px;
+}
+
+.font{
+	font-size:30px;
+}
+
+.ml{
+	margin-left: 20px;
+}
+
+table{
+	font-weight: bold;
+}
+
+
+table.border{
+	border-collapse:collapse
+}
+
+table.border th{
+	border:3px solid #000066;
+	background-color :#66CCFF;
+}
+
+table.border td{
+	 border:3px solid #000066;
+}
+
+.relative1{
+	position: relative;
+	left: 175px;
+	font-size:20px;
+}
+
+.relative2{
+	position: relative;
+	left: 189px;
+	font-size:20px;
+}
+
+.relative3{
+	position: relative;
+	left: 165px;
+	font-size:20px;
+}
+

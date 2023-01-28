@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/product-search.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<title>商品検索</title>
+</head>
+<body>
+<!-- ヘッダー部 -->
+<form th:action="@{/header}" method="post">
+	<input type="submit" name="logout" value="ログアウト" class="btn btn-danger">
+	<span class="gift-text-position">ギフト券残高\<span th:text="${giftAmount}" class="green"></span></span>
+	<input type="submit" name="gift" value="ギフト券" class="btn btn-warning gift-button-position">
+	<input type="submit" name="cart" value="カート" class="btn btn-warning cart-button-position">
+</form>
+
+<div align="center">
+
+<h1 >商品検索</h1>
+
+<form th:action="@{/product-search}" th:object="${productSearchForm}" method="post">
+	<!-- エラー表示 -->
+	<p th:errors="*{all}" class="error-messages"></p>
+
+	<table>
+		<tr><td class="relative1">商品名 :</td>
+		<td><span class="pl"><input type="text" th:field="*{productName}" class="my-xl-3 "></span></td>
+		</tr>
+		<tr>
+			<td class="relative2">価格 :</td>
+			<td>
+				<span class="pl">
+				<input type="text" th:field="*{priceMin}" maxlength="9">円から
+				<input type="text" th:field="*{priceMax}" maxlength="9">円
+				</span>
+			</td>
+		</tr>
+
+		<tr><td class="relative3">ジャンル :</td>
+			<td>
+				<span class="pl-2">
+				<input type="checkbox" th:field="*{genre}" value="1" class="my-xl-3">食品・飲料<br>
+				</span>
+				<span class="pl-2">
+				<input type="checkbox" th:field="*{genre}" value="2" class="mb-xl-3">衣服類<br>
+				</span>
+				<span class="pl-2">
+				<input type="checkbox" th:field="*{genre}" value="3" class="mb-xl-3">本・マンガ・雑誌<br>
+				</span>
+				<span class="pl-2">
+				<input type="checkbox" th:field="*{genre}" value="4" class="mb-xl-3">電化製品<br>
+				</span>
+				<span class="pl-2">
+				<input type="checkbox" th:field="*{genre}" value="5" class="mb-xl-3">家具<br>
+				</span>
+				<span class="pl-2">
+				<input type="checkbox" th:field="*{genre}" value="6" class="mb-xl-3">美容品<br>
+				</span>
+				<span class="pl-2">
+				<input type="checkbox" th:field="*{genre}" value="7" class="mb-xl-3">おもちゃ・ゲーム<br>
+				</span>
+			</td>
+
+		</tr>
+	</table>
+
+	<input type="submit" name="back" value="メニューへ" class="btn btn-warning mt-xl-3 me-xl-2">
+	<input type="submit" name="search" value="検索" class="btn btn-warning mt-xl-3 ms-xl-2 ">
+
+</form>
+
+</div>
+</body>
+</html>

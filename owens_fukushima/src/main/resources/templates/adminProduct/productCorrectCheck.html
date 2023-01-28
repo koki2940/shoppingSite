@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div align="center">
+<form th:action="@{/correct-check}" th:object="${productCorrectForm}" method="post">
+	<h1>修正確認</h1>
+	<h4>下記の内容で修正します。よろしいですか</h4>
+		<table>
+			<tr>
+				<td class="font">・商品ID : </td><td class="font"><span th:text="*{productId}"></span></td>
+			</tr>
+			<tr>
+				<td class="font">・商品名 : </td><td class="font"><span th:text="*{productName}"></span></td>
+			</tr>
+			<tr>
+				<td class="font">・価格 : </td><td class="font"><span th:text="*{price}"></span>円</td>
+			</tr>
+			<tr>
+				<td class="font">・ジャンル : </td><td class="font"><span th:text="*{genreName}"></span></td>
+			</tr>
+			<tr>
+				<td class="font">・在庫数 : </td><td class="font"><span th:text="*{quantity}"></span></td>
+			</tr>
+		</table>
+			<input type="submit" name="backProductCorrect" value="戻る">
+			<input type="submit" name="corret" value="修正">
+</form>
+</div>
+</body>
+</html>

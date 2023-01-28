@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/product-register.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<title>登録確認</title>
+</head>
+<body>
+<!-- ヘッダー部 -->
+<form th:action="@{/header}" method="post">
+	<input type="submit" name="logout" value="ログアウト" class="btn btn-danger">
+	<span class="gift-text-position">ギフト券残高\<span th:text="${giftAmount}" class="green"></span></span>
+	<input type="submit" name="gift" value="ギフト券" class="btn btn-warning gift-button-position"disabled>
+	<input type="submit" name="cart" value="カート" class="btn btn-warning cart-button-position" disabled>
+</form>
+
+
+<div align="center">
+	<h1>登録確認</h1>
+	<h3 class="text-danger">※ 入力内容を確認してください。</h3>
+	<form th:action="@{/product-register-check}" th:object="${productRegisterForm}" method="post">
+	<table>
+		<tr>
+			<td class="font">・商品名 : </td><td class="font"><span th:text="*{productName}"></span></td>
+		</tr>
+		<tr>
+			<td class="font">・価格 : </td><td class="font"><span th:text="*{price}"></span>円</td>
+		</tr>
+		<tr>
+			<td class="font">・ジャンル : </td><td class="font"><span th:text="*{genreName}"></span></td>
+		</tr>
+		<tr>
+			<td class="font">・在庫数 : </td><td class="font"><span th:text="*{quantity}"></span></td>
+		</tr>
+	</table>
+
+		<input type="submit" name="backRegister" value="戻る" class="btn btn-warning mt-xl-3 me-xl-2">
+		<input type="submit" name="register" value="登録" class="btn btn-warning mt-xl-3 ms-xl-2">
+</form>
+
+</div>
+
+</body>
+</html>

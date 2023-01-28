@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/product-search.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<title>カート確認</title>
+</head>
+<body>
+<!-- ヘッダー部 -->
+<form th:action="@{/header}" method="post">
+	<input type="submit" name="logout" value="ログアウト" class="btn btn-danger">
+	<span class="gift-text-position">ギフト券残高\<span th:text="${giftAmount}" class="green"></span></span>
+	<input type="submit" name="gift" value="ギフト券" class="btn btn-warning gift-button-position">
+	<input type="submit" name="cart" value="カート" class="btn btn-warning cart-button-position">
+</form>
+
+<div align="center">
+<!-- カート内に商品がなかった場合 -->
+<p th:if="${cartList.size()} == 0" class="not-data">商品はありません</p>
+
+<!-- カート内に商品がある場合 -->
+<div th:if="${cartList.size()} != 0">
+
+<!-- 合計金額を表示 -->
+<p class="total-amount-position">合計\<span th:text="${totalAmount}" class="green"></span></p>
+
+<!-- エラーメッセージ -->
+<div th:if="${errorList} != null">
+	<span th:each="errorMsg : *{errorList}" class="red">
+		<span th:text="${errorMsg}"></span><br>
+	</span>
+</div>
+
+<table class="border">
+	<tr>
+		<th>商品名</th>
+		<th>価格</th>
+		<th>購入数</th>
+		<th></th>
+	</tr>
+	<tr th:each="cart : ${cartList}">
+		<td><span th:text="${cart.productName}"></span></td>
+		<td><span th:text="${cart.price}"></span>円</td>
+		<td><span th:text="${cart.purchaseQty}"></span></td>
+		<td><form th:action="@{/cart-product-delete}" method="post">
+				<!-- 商品IDを渡す -->
+				<input type="hidden" name="productId" th:value="${cart.productId}">
+				<input type="submit" name="delete" value="削除" class="btn btn-primary">
+			</form>
+		</td>
+	</tr>
+
+</table>
+</div>
+<form th:action="@{/cart-product-purchase}" method="post">
+	<input type="submit" name="productSearch" value="検索" class="btn btn-warning mt-xl-3 me-xl-2">
+	<!-- カート内に商品がある場合 -->
+	<span th:if="${cartList.size()}!=0">
+		<input type="submit" name="purchase" value="購入" class="btn btn-warning mt-xl-3 ms-xl-2">
+	</span>
+	<!-- カート内に商品がない場合 -->
+	<span th:if="${cartList.size()}==0">
+		<input type="submit" name="purchase" value="購入" class="btn btn-warning mt-xl-3 ms-xl-2" disabled>
+	</span>
+
+</form>
+
+
+</div>
+</body>
+</html>

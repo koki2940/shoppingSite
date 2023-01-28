@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/purchase-history.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<title>削除完了</title>
+</head>
+<body>
+<!-- ヘッダー部 -->
+<form th:action="@{/header}" method="post">
+	<input type="submit" name="logout" value="ログアウト" class="btn btn-danger">
+	<span class="gift-text-position">ギフト券残高\<span th:text="${giftAmount}" class="green"></span></span>
+	<input type="submit" name="gift" value="ギフト券" class="btn btn-warning gift-button-position">
+	<input type="submit" name="cart" value="カート" class="btn btn-warning cart-button-position">
+</form>
+
+<div align="center">
+<h1 class="pt-xl-3">削除完了</h1>
+<form th:action="@{history-delete-finish}" method="post">
+	<input type="submit" name="selectMenu" value="メニューへ" class="btn btn-warning my-xl-3"><br>
+	<input type="submit" name="selectPurchaseHistory" value="一覧へ"  class="btn btn-warning mb-xl-3"><br>
+
+</form>
+</div>
+
+</body>
+</html>

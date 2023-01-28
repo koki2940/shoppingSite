@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+
+.gift-text-position{
+
+	font-weight: bold;
+	position: relative;
+	left: 700px;
+	font-size:27px;
+}
+
+.charge-amount-position{
+	font-weight:bold;
+	font-size:27px;
+}
+.gift-button-position{
+	position: relative;
+	left: 750px;
+	font-size:20px;
+}
+
+.cart-button-position{
+	position: relative;
+	left: 750px;
+	font-size:20px;
+}
+
+.total-amount-position{
+
+	font-weight: bold;
+	position: relative;
+	right:350px;
+	bottom:20px;
+	font-size:30px;
+}
+
+.radio-button-position{
+
+	width:200%;
+	font-weight: bold;
+	position: relative;
+	right:50px;
+	font-size:30px;
+}
+
+
+
+
+
+
+

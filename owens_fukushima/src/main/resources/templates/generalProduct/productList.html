@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/product-search.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<title>商品一覧</title>
+</head>
+<body>
+<!-- ヘッダー部 -->
+<form th:action="@{/header}" method="post">
+	<input type="submit" name="logout" value="ログアウト" class="btn btn-danger">
+	<span class="gift-text-position">ギフト券残高\<span th:text="${giftAmount}" class="green"></span></span>
+	<input type="submit" name="gift" value="ギフト券" class="btn btn-warning gift-button-position">
+	<input type="submit" name="cart" value="カート" class="btn btn-warning cart-button-position">
+</form>
+
+
+<div align="center">
+	<h1>商品一覧</h1>
+	<!-- 検索条件に該当する項目がなかった場合 -->
+	<p th:if="${productList.size()} == 0" class="not-data pt-xl-4">
+		検索条件に一致する商品がありませんでした
+	</p>
+
+		<div th:if="${productList.size()} != 0">
+		<table class="border">
+				<tr>
+					<th>商品名</th>
+					<th>価格</th>
+					<th>在庫数</th>
+					<th>ジャンル</th>
+					<th></th>
+				</tr>
+				<tr th:each="product : ${productList}">
+					<td><span th:text="${product.productName}"></span></td>
+					<td><span th:text="${product.price}"></span>円</td>
+					<td><span th:text="${product.quantity}"></span></td>
+					<td><span th:text="${product.genreName}"></span></td>
+
+					<td><form th:action="@{/product-detail}" method="post">
+							<input type="submit" name="detail" value="詳細" class="btn btn-warning">
+							<!-- 商品IDを渡す -->
+							<input type="hidden" name="productId" th:value="${product.productId}">
+					    </form>
+			    	</td>
+				</tr>
+		</table>
+		</div>
+
+		<form th:action = "@{/back-product-list}" method="post">
+			<input type="submit" name= "backProductSearch" value="戻る" class="btn btn-warning mt-xl-4">
+		</form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/purchase-history.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<title>購入履歴削除確認</title>
+</head>
+<body>
+<!-- ヘッダー部 -->
+<form th:action="@{/header}" method="post">
+	<input type="submit" name="logout" value="ログアウト" class="btn btn-danger">
+	<span class="gift-text-position">ギフト券残高\<span th:text="${giftAmount}" class="green"></span></span>
+	<input type="submit" name="gift" value="ギフト券" class="btn btn-warning gift-button-position">
+	<input type="submit" name="cart" value="カート" class="btn btn-warning cart-button-position">
+</form>
+
+
+<div align="center">
+<h1>購入履歴削除確認</h1>
+<h3><span class="red">※</span>
+	下記の購入履歴を削除します
+	よろしいですか
+</h3>
+<form th:action="@{/history-delete-check}" th:object="${purchaseInfo}" method="post">
+	<table>
+		<tr>
+			<td class="font">・商品名 :</td><td class="font"><span th:text="*{productName}"></span></td>
+		</tr>
+		<tr>
+			<td class="font">・価格 : </td><td class="font"><span th:text="*{price}"></span>円</td>
+		</tr>
+		<tr>
+			<td class="font">・購入数 :</td><td class="font"><span th:text="*{purchaseQty}"></span></td>
+		</tr>
+		<tr>
+			<td class="font">・購入日時 :</td><td class="font"><span th:text="*{purchaseDateTime}"></span></td>
+		</tr>
+	</table>
+
+	<!-- 購入Idを渡す -->
+	<input type="hidden" name="purchaseId" th:value="*{purchaseId}">
+	<input type="submit" name="backpurchase" value="戻る" class="btn btn-warning mt-xl-3 me-xl-2">
+	<input type="submit" name="delete" value="削除" class="btn btn-warning mt-xl-3 ms-xl-2">
+
+</form>
+</div>
+</body>
+</html>
