@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/admin.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<title>商品修正完了</title>
+</head>
+<body>
+	<!-- ヘッダー部 -->
+	<header th:include="common :: pageHeaderAdmin"></header>
+	<!--ヘッダー部終了  -->
+	<div align="center">
+		<form th:action="@{/product-correct-finish}" method="post">
+			<h1>修正完了</h1>
+			<input type="submit" name="returnMenu" value="メニューへ" class="btn btn-warning my-xl-3"><br>
+			<input type="submit" name="returnList" value="一覧" class="btn btn-warning mb-xl-3">
+		</form>
+	</div>
+</body>
+</html>

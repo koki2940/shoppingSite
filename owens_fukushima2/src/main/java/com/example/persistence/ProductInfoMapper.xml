@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.persistence.ProductInfoMapper">
+<!-- 商品検索時 -->
+	<select id="selectProductInfo"
+		resultType="com.example.domain.ProductInfo">
+		<bind name="productNameLike" value="'%' + productName + '%'" />
+
+		SELECT
+			product_info.product_id,
+			product_info.product_name,
+			product_info.price,
+			product_info.quantity,
+			product_info.version_number,
+			genre.genre_name
+		FROM product_info
+		INNER JOIN genre
+		ON product_Info.genre = genre.genre_id
+		<where>
+			<!-- 削除フラグが0の商品のみ表示する -->
+			delete_flag = 0
+
+			<!-- 商品名が入力されているか -->
+			<if test="productName != ''">
+			AND	product_name LIKE #{productNameLike}
+			</if>
+
+			<!-- 価格が入力されているか -->
+			<if test="priceMin != null  and priceMax != null">
+			 <![CDATA[ AND price >= #{priceMin} AND price <= #{priceMax}]]>
+			</if>
+
+			<!--チェックボックスが選択されているか -->
+			<if test="genre.length != 0">
+			AND genre in
+				 <foreach item="genre" open="(" close=")" collection="genre" separator=",">
+      				#{genre}
+   				 </foreach>
+			</if>
+
+		</where>
+	</select>
+
+	<!-- 商品詳細時 ・商品購入確認時-->
+	<select id="selectIdMatchProductInfo" resultType="com.example.domain.ProductInfo">
+	SELECT
+		product_info.product_name,
+		product_info.price,
+		product_info.quantity,
+		genre.genre_name
+	FROM product_info
+	INNER JOIN genre
+	ON product_Info.genre = genre.genre_id
+	WHERE product_id = #{productId}
+	</select>
+
+	<!-- 商品購入時在庫数減算-->
+	<update id="upDateSubstractQuantity">
+	UPDATE product_info
+	SET quantity = quantity - #{purchaseQty}
+	WHERE product_id = #{productId}
+		  AND price = #{price}
+		  AND delete_flag = 0
+	</update>
+
+	<!-- カート内商品購入時在庫数チェック -->
+	<select id="selectIdMatchQuantity" resultType="java.lang.Integer">
+	SELECT quantity FROM product_info
+	WHERE product_id = #{productId}
+
+	</select>
+
+	<!-- 商品名の入力時 -->
+	<select id="selectNameMatchCount" resultType="java.lang.Integer">
+	SELECT COUNT(*) FROM product_info
+	WHERE	product_name = #{productName} AND delete_flag = 0
+	</select>
+
+	<!-- 商品登録時 -->
+	<insert id="insertProductInfo">
+	INSERT INTO product_info (product_name, price, genre, quantity)
+	VALUES(#{productName}, #{price}, #{genre}, #{quantity})
+	</insert>
+
+	<select id="selectGenreNumberMatchGenreName" resultType="java.lang.String">
+	SELECT genre_name FROM genre WHERE genre_id = #{genre}
+	</select>
+
+	<!--カート内商品削除時 -->
+	<update id = "upDateAddQuantity">
+	UPDATE product_info
+	SET quantity = quantity + #{purchaseQty}
+	WHERE product_id = #{productId}
+    </update>
+
+    <!-- 商品修正削除ボタン押下時 -->
+    <select id="selectProductInfoAll" resultType="com.example.domain.ProductInfo">
+    SELECT
+		product_info.product_id,
+		product_info.product_name,
+		product_info.price,
+		product_info.quantity,
+		product_info.version_number,
+		genre.genre_name
+	FROM product_info
+	INNER JOIN genre
+	ON product_Info.genre = genre.genre_id
+	WHERE product_info.delete_flag = 0
+	ORDER BY product_info.product_id
+    </select>
+
+    <!-- 商品修正時 -->
+    <update id="upDateProductInfo">
+    UPDATE product_info
+    SET price = #{correct.price},
+    	quantity = #{correct.quantity},
+    	version_number = #{versionNumber} + 1
+    WHERE product_id = #{correct.productId} AND version_number = #{versionNumber}
+    </update>
+
+    <!-- 商品削除時 -->
+    <update id="upDateDeleteFlag">
+    UPDATE product_info
+    SET delete_flag = 1,
+    	version_number = #{versionNumber} + 1
+    WHERE product_id = #{productId} AND version_number = #{versionNumber}
+    </update>
+
+    <!-- 商品更新チェック -->
+    <select id ="selectPurchaseProductCount" resultType="java.lang.Integer">
+   SELECT
+		COUNT(*)
+	FROM product_info
+	WHERE product_id = #{productId}
+		  AND price = #{price}
+		  AND delete_flag = 0
+    </select>
+
+    <!-- カートに同じ商品をいれるとき、DBから最新の価格を取得する -->
+    <select id="selectLatestPrice" resultType="java.lang.Integer">
+    SELECT price
+    FROM product_info
+    WHERE product_id = #{productId}
+    </select>
+
+    <!-- 購入履歴からカートに入れる時、DBから最新の情報を取得する -->
+    <select id="selectInCartInfo" resultType="com.example.domain.ProductInfo">
+    SELECT product_id,
+           product_name,
+           price
+    FROM product_info
+    WHERE product_id = #{productId}
+    </select>
+
+
+</mapper>

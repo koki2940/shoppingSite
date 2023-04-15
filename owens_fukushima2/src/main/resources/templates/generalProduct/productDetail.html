@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/general.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<script type="text/javascript" th:src="@{/js/cartCheck.js}"></script>
+
+<title>商品詳細</title>
+</head>
+<body>
+	<!-- ヘッダー部 -->
+	<header th:include="common :: pageHeaderGeneral"></header>
+	<!--ヘッダー部終了  -->
+
+
+	<div align="center">
+		<form th:action ="@{/product-purchase}" th:object="${productPurchaseForm}" method="post">
+			<h1>商品詳細</h1>
+			<!-- エラーメッセージ表示 -->
+			<p th:errors="*{all}" class="error-messages"></p>
+
+			<table>
+				<tr>
+					<td class="font">・<span th:text="#{productName}"></span>:</td><td class="font"><span th:text="*{productName}"></span><td>
+				</tr>
+				<tr>
+					<td class="font">・<span th:text="#{price}"></span>:</td><td class="font">\<span th:text="*{price} >= 1000? ${#numbers.formatInteger(productPurchaseForm.price, 3, 'COMMA')}: *{price}"></span></td>
+				</tr>
+				<tr>
+					<td class="font">・<span th:text="#{genre}"></span>:</td><td class="font"><span th:text="*{genreName}"></span></td>
+				</tr>
+				<tr>
+					<td class="font">・<span th:text="#{quantity}"></span>:</td>
+					<td class="font red"><span th:text="*{quantity} == 0? '在庫がありません' : *{quantity} "></span></td>
+				</tr>
+				<tr  th:if="*{quantity} != 0">
+					<!-- 在庫がなかったらセレクトボックスを表示しない -->
+					<td class="font">・<span th:text="#{purchaseQty}"></span>:</td>
+					<td>
+						<select th:field="*{purchaseQty}"><option value=""></option>
+							<option th:each="qty : *{purchaseQtyList()}" th:value="${qty}"	th:text="${qty}"></option>
+						</select>
+					</td>
+				</tr>
+			</table>
+
+			<input type="submit" name="backProductList" value="一覧へ" class="btn btn-warning mt-xl-3 me-xl-2">
+			<span th:if="*{quantity} != 0">
+				<input type="submit" name="purchase" value="今すぐ購入" class="btn btn-warning mt-xl-3 ms-xl-2 ">
+				<!-- 商品IDを渡す -->
+				<input type="hidden" name="productId" th:value="*{productId}">
+				<input type="submit" name="cart" value="カートにいれる" class="btn btn-warning mt-xl-3 ms-xl-2 ">
+			</span>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/admin.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<title>管理者ユーザーメニュー</title>
+</head>
+<body>
+	<!-- ヘッダー部 -->
+	<header th:include="common :: pageHeaderAdmin"></header>
+	<!--ヘッダー部終了  -->
+
+	<div align="center">
+		<span class="user-name">ようこそ<span th:text="${userName}"></span>さん</span>
+		<h1 class="mt-xl-3">メニュー</h1>
+
+		<form th:action="@{/select-btn}" method="post">
+			<input type="submit" name="productRegister" value="商品登録" class="btn btn-warning my-lg-3"><br>
+			<input type="submit" name="productCorrectDelete" value="商品修正削除" class="btn btn-warning mb-xl-3">
+		</form>
+	</div>
+</body>
+</html>

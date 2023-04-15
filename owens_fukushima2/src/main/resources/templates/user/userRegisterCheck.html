@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/user.css}">
+<title>登録確認</title>
+</head>
+<body>
+	<div align="center">
+		<h1 class="pt-xl-3">ユーザー登録確認</h1>
+		<h4><span class="red">※</span>下記の内容で登録します。よろしいですか?</h4>
+		<form th:action="@{/user-register-check}" th:object="${userRegisterForm}" method="post">
+			<table>
+				<tr>
+					<td class="font"><span th:text="#{userName}"></span><span>:</span></td><td><span th:text="*{userName}" class="font"></span></td>
+				</tr>
+				<tr>
+					<td class="font"><span th:text="#{postNumber}"></span><span>:</span></td><td><span th:text="*{postNumber}" class="font"></span></td>
+				</tr>
+				<tr>
+					<td class="font"><span th:text="#{address}"></span><span>:</span></td><td><span th:text="*{address}" class="font"></span></td>
+				</tr>
+				<tr>
+					<td class="font"><span th:text="#{mail}"></span><span>:</span></td><td><span th:text="*{mail}" class="font"></span></td>
+				</tr>
+			</table>
+			
+			
+			<input type="submit" name="backuserRegister" value="戻る" class="btn btn-warning mt-xl-4 me-xl-2">
+			<input type="submit" name="register" value="登録" class="btn btn-warning mt-xl-4 ms-xl-2">
+		</form>
+	</div>
+</body>
+</html>

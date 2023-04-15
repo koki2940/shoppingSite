@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/user.css}">
+<title>ユーザー登録完了</title>
+</head>
+<body>
+	<div align="center">
+		<h1 class="pt-xl-3">ユーザー登録完了しました</h1>
+		<form th:action="@{/user-register-finish}" method="post">
+			<input type="submit" name="loginMenu" value="ログイン画面へ" class="btn btn-warning mt-xl-4">
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.persistence.CartInfoMapper">
+    <!--カートに商品を入れる時 -->
+	<insert id="insertCartInfo">
+	INSERT INTO cart_info (user_id, product_id, product_name, price, purchase_qty)
+	VALUES(#{userId}, #{product.productId}, #{product.productName}, #{product.price}, #{product.purchaseQty})
+	</insert>
+
+	<update id="upDateCartInfo">
+	UPDATE cart_info SET price = #{price}, purchase_qty = purchase_qty + #{purchaseQty}
+	WHERE product_id = #{productId}  AND user_id = #{userId}
+	</update>
+
+    <!-- ログイン後カート情報を取得 -->
+	<select id="selectCartInfo" resultType="com.example.domain.ProductInfo">
+	SELECT
+		cart_id,
+		product_id,
+		product_name,
+		price,
+		purchase_qty
+	FROM cart_info
+	WHERE user_id = #{userId}
+	</select>
+
+	<!--「削除」ボタン押下時 -->
+	<delete id="deleteCartInfo">
+	DELETE FROM cart_info WHERE cart_id = #{cartId}
+
+	</delete>
+
+	<!-- 「カートを空にする」・「購入」ボタン押下時-->
+	<delete id="deleteAllCartInfo">
+	DELETE FROM cart_info WHERE user_id = #{userId}
+	</delete>
+
+	<!-- カートに商品を新規でいれた時、DBから情報を取得する -->
+	<select id="selectIdMatchCartInfo" resultType="com.example.domain.ProductInfo">
+	SELECT
+		cart_id,
+		product_id,
+		product_name,
+		price,
+		purchase_qty
+	FROM cart_info
+	WHERE product_id = #{productId} AND user_id = #{userId}
+	</select>
+
+</mapper>

@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+
+
+
+
+table{
+	font-weight: bold;
+}
+
+
+table.border{
+	border-collapse:collapse
+}
+
+table.border th{
+	border:3px solid #000066;
+	background-color :#66CCFF;
+}
+
+table.border td{
+	 border:3px solid #000066;
+}
+
+
+
+.relative2{
+	position: relative;
+	right: 20px;
+	top: 5px;
+	font-size:20px;
+}
+
+.relative3{
+	position: relative;
+	right: 20px;
+	top : 10px;
+	font-size:20px;
+}
+
+.relative4{
+	position: relative;
+	right: 20px;
+	top:15px;
+	font-size:20px
+
+
+}
+
+.relative5{
+	position: relative;
+	right: 20px;
+	top:20px;
+	font-size:20px
+}
+
+btn-margin-rt{
+	margin-top:100px;
+	margin-right:20px;
+}
+

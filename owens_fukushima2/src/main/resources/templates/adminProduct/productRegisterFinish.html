@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/admin.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<title>登録完了</title>
+</head>
+<body>
+	<!-- ヘッダー部 -->
+	<header th:include="common :: pageHeaderAdmin"></header>
+	<!--ヘッダー部終了  -->
+
+	<div align="center">
+		<h1 class="pt-xl-3">登録完了</h1>
+		<form th:action="@{/product-register-finish}" method="post">
+			<input type="submit" name="addProductRegister" value="追加登録" class="btn btn-warning my-xl-3"><br>
+			<input type="submit" name="returnMenu" value="メニューへ" class="btn btn-warning mb-xl-3">
+		</form>
+	</div>
+</body>
+</html>

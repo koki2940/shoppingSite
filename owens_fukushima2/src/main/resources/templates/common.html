@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>ヘッダー共通部分</title>
+</head>
+<body>
+
+	<!-- 一般ユーザー画面のヘッダー部 -->
+	<th:block th:fragment="pageHeaderGeneral">
+
+		<form th:action="@{/logoff}" method="post" style="display:inline" onSubmit="return Test()">
+			<input type="submit" name="logout" value="ログアウト"   class="btn btn-danger" >
+			<input type="hidden" id="listSize" th:value="${cartList.size()}" />
+		</form>
+		<form th:action="@{/header}" method="post" style="display:inline">
+			<span class="gift-text-position">ギフト券残高\<span th:text="${giftAmount} >= 1000? ${#numbers.formatInteger(giftAmount, 3, 'COMMA')}: ${giftAmount}" class="gift-amount-color"></span></span>
+			<input type="submit" name="gift" value="ギフト券" class="btn btn-warning gift-button-position" >
+			<input type="submit" name="cart" value="カート" class="btn btn-warning cart-button-position" >
+		</form>
+	</th:block>
+
+	<!-- 管理者画面のヘッダー部 -->
+	<th:block th:fragment="pageHeaderAdmin">
+		<form th:action="@{/logout}" method="post" style="display:inline">
+			<input type="submit" name="logout" value="ログアウト" class="btn btn-danger logout-button-position">
+		</form>
+	</th:block>
+
+
+	<!-- 購入確認時の共通表示項目 -->
+	<th:block th:fragment="purchaseCheckHeadline">
+		<h1>購入確認</h1>
+		<!-- エラーメッセージ -->
+		<div th:if="${errorList} != null">
+			<span th:each="errorMsg : *{errorList}" class="error-message">
+				<span th:text="${errorMsg}"></span><br>
+			</span>
+		</div>
+	</th:block>
+
+	<th:block th:fragment="commonProductInfo">
+		<table>
+			<tr>
+				<td class="font">・<span th:text="#{productName}"></span> : </td>
+				<td class="font"><span th:text="*{productName}"></span></td>
+			</tr>
+			<tr>
+				<td class="font">・<span th:text="#{price}"></span>: </td>
+				<td class="font">\<span th:text="*{price} >= 1000? ${#numbers.formatInteger(productPurchaseForm.price, 3, 'COMMA')}: *{price}"></span></td>
+			</tr>
+			<tr>
+				<td class="font">・<span th:text="#{purchaseQty}"></span>: </td>
+				<td class="font"><span th:text="*{purchaseQty}"></span></td>
+			</tr>
+			<tr>
+				<td class="font">・<span th:text="#{totalAmount}"></span>: </td>
+				<td class="font">\<span th:text="*{totalAmount} >= 1000? ${#numbers.formatInteger(productPurchaseForm.totalAmount, 3, 'COMMA')}: *{totalAmount}"></span></td>
+			</tr>
+		</table>
+	</th:block>
+
+	<!-- 購入完了時の共通表示項目 -->
+	<th:block th:fragment="purchaseFinishHeadline">
+ 		<h1 class="pt-xl-3">ご購入ありがとうございました。</h1>
+	</th:block>
+</body>
+</html>

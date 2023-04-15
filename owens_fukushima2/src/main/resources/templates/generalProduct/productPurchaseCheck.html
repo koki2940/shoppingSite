@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/general.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<script type="text/javascript" th:src="@{/js/cartCheck.js}"></script>
+<title>購入確認</title>
+</head>
+<body>
+	<!-- ヘッダー部 -->
+	<header th:include="common :: pageHeaderGeneral"></header>
+	<!--ヘッダー部終了  -->
+
+	<div align="center">
+		<span th:include="common :: purchaseCheckHeadline"></span>
+
+		<form th:action="@{/product-purchase-finish}" th:object="${productPurchaseForm}" method="post">
+			<div th:include="common :: commonProductInfo"></div>
+
+			<input type="submit" name="backDetail" value="戻る" class="btn btn-warning mt-xl-3 me-xl-2">
+			<input type="submit" name="purchase" value="購入" class="btn btn-warning mt-xl-3 ms-xl-2">
+		</form>
+	</div>
+</body>
+</html>

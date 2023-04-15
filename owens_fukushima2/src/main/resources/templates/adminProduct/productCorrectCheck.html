@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/admin.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- ヘッダー部 -->
+	<header th:include="common :: pageHeaderAdmin"></header>
+	<!--ヘッダー部終了  -->
+	<div align="center">
+		<form th:action="@{/correct-check}" th:object="${productCorrectForm}" method="post">
+			<h1>修正確認</h1>
+			<h4><span class="red">※</span>下記の内容で修正します。よろしいですか?</h4>
+			<!-- エラーメッセージ -->
+			<span th:text="${errorMsg}" class="error-message"></span>
+			<table>
+				<tr>
+					<td class="font">・<span th:text="#{productId}"></span> : </td><td class="font"><span th:text="*{productId}"></span></td>
+				</tr>
+				<tr>
+					<td class="font">・<span th:text="#{productName}"></span> : </td><td class="font"><span th:text="*{productName}"></span></td>
+				</tr>
+				<tr>
+					<td class="font">・<span th:text="#{price}"></span> : </td><td class="font">\<span th:text="*{price} >= 1000? ${#numbers.formatInteger(productCorrectForm.price, 3, 'COMMA')}: *{price}" class="red"></span></td>
+				</tr>
+				<tr>
+					<td class="font">・<span th:text="#{genre}"></span> : </td><td class="font"><span th:text="*{genreName}"></span></td>
+				</tr>
+				<tr>
+					<td class="font">・<span th:text="#{quantity}"></span> : </td><td class="font red"><span th:text="*{quantity}"></span></td>
+				</tr>
+			</table>
+			<input type="submit" name="backProductCorrect" value="戻る" class="btn btn-warning mt-xl-4  me-xl-2">
+			<input type="submit" name="corret" value="修正" class="btn btn-warning mt-xl-4  ms-xl-2">
+		</form>
+	</div>
+</body>
+</html>

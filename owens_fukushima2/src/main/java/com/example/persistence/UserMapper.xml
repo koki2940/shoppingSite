@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.persistence.UserMapper">
+	<!-- ユーザー登録時 -->
+    <insert id="insertUserInfo">
+     	INSERT INTO user(user_name, password, mail, post_number, address)
+     	VALUES (#{userName}, #{password}, #{mail}, #{postNumber}, #{address})
+    </insert>
+
+	<!-- ユーザー名の重複チェック -->
+    <select id="selectUserNameDuplicationCheck" resultType="java.lang.Integer">
+    	SELECT COUNT(*) FROM user
+    	<where>
+    		<!-- userNameが存在するか -->
+    		<if test="userName != ''">
+        	 user_name = #{userName}
+        	</if>
+    	</where>
+    </select>
+    
+     <!-- メールアドレスの重複チェック -->
+    <select id="selectMail" resultType="java.lang.Integer">
+    	SELECT COUNT(*) FROM user
+    	<where>
+    		<if test="mail != ''">
+    			mail = #{mail}
+    		</if>
+    	</where> 
+    </select>
+
+    <!-- ログイン時 -->
+    <select id="selectAccount" resultType="com.example.domain.UserInfo">
+    	SELECT user_id, authority, gift_amount FROM user
+    	<where>
+    		<!-- userNameが存在するか -->
+    		<if test="userName != ''">
+    		user_name = #{userName}
+    		</if>
+    		<!-- passwordが存在するか -->
+    		<if test="password != ''">
+    		AND password = #{password}
+    		</if>
+    	</where>
+    </select>
+
+    <!-- ギフト券チャージ時 -->
+    <update id="upDateAddGiftAmount">
+    	UPDATE user
+    	SET gift_amount = gift_amount + #{chargeAmount}
+    	WHERE user_id = #{userId}
+    </update>
+
+     <!-- 商品購入時 ギフト券残高減算 -->
+    <update id="upDateSubstractGiftAmount">
+  	UPDATE user
+    SET gift_amount = gift_amount - #{totalAmount}
+    WHERE user_id = #{userId}
+    </update>
+
+    <select id="selectIdMatchGiftAmount" resultType="java.lang.Integer">
+    	SELECT gift_amount
+    	FROM user
+    	WHERE user_id = #{userId}
+    </select>
+
+    <!-- ログイン認証用ユーザー情報取得(SpringSecurity) -->
+   <select id="findLoginUser" resultType="com.example.domain.UserInfo">
+   	SELECT user_name, password, authority FROM user WHERE user_name = #{userName}
+   </select>
+
+   <!-- ログインしたユーザー情報を取得(SpringSecurity) -->
+   <select id="findLoginSucceedUser" resultType="com.example.domain.UserInfo">
+  SELECT user_id,
+  		 authority,
+  		 gift_amount
+   FROM user
+   WHERE user_name = #{userName}
+   </select>
+
+
+</mapper>

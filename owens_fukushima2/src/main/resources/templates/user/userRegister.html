@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>ユーザー登録</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/user.css}">
+</head>
+<body>
+	<div align="center">
+		<h1 class="pt-xl-3">ユーザー登録</h1>
+ 		<h3><span class="red">※</span>は入力必須です。</h3>
+
+		<form th:action="@{/user-register}" th:object="${userRegisterForm}"method="post">
+			<!-- エラーメッセージ -->
+			<p th:errors="*{all}" class="error-messages"></p>
+			<table>
+				<tr>
+					<td><span th:text="#{userName}"></span><span class="red">※</span></td>
+					<td class="padding"><input type="text" th:field="*{userName}" maxlength="10"></td>
+				</tr>
+				<tr>
+					<td><span th:text="#{postNumber}"></span><span class="red">※</span></td>
+					<td><input type="text" th:field="*{postNumber}" placeholder="例)3501126 " class="my-xl-3"></td>
+				</tr>
+				<tr>
+					<td><span th:text="#{address}"></span><span class="red">※</span></td>
+					<td><input type="text" th:field="*{address}" size="30" placeholder="例)埼玉県川越市3-10-47"></td>
+				</tr>
+				<tr>
+					<td><span th:text="#{mail}"></span><span class="red">※</span></td>
+					<td><input type="text" th:field="*{mail}"  placeholder="例)info@gmail.com" class="mt-xl-3"></td>
+				</tr>
+				<tr>
+					<td><span th:text="#{password}"></span><span class="red">※</span></td>
+					<td><input type="password" th:field="*{password}" maxlength="10" class="my-xl-3"></td>
+				</tr>
+				<tr>
+					<td><span th:text="#{passwordConf}"><span class="red">※</span></span></td>
+					<td><input type="password" th:field="*{passwordConf}"></td>
+				</tr>
+			</table>
+
+			<input type="submit" name="backloginMenu" value="戻る" class="btn btn-warning mt-xl-3 me-xl-2">
+			<input type="submit" name="registerCheck" value="確認" class="btn btn-warning mt-xl-3 ms-xl-2 ">
+		</form>
+	</div>
+</body>
+</html>

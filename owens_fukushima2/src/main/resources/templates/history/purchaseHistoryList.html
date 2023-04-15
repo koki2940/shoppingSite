@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/general.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<script type="text/javascript" th:src="@{/js/cartCheck.js}"></script>
+<title>購入履歴一覧</title>
+</head>
+<body>
+	<!-- ヘッダー部 -->
+	<header th:include="common :: pageHeaderGeneral"></header>
+	<!--ヘッダー部終了  -->
+
+	<div align="center">
+		<h1>購入履歴一覧</h1>
+		<h2><span th:text="${userName}"></span>さんの購入履歴</h2>
+
+		<!-- 購入履歴が存在しない場合 -->
+		<p th:if="${purchaseHistoryList.size()} == 0" class="not-data">
+		  購入履歴はありません
+		</p>
+
+		<div th:if="${purchaseHistoryList.size()} != 0">
+			<table class="border">
+				<tr>
+					<th><span th:text="#{productName}"></span></th>
+					<th><span th:text="#{price}"></span></th>
+					<th><span th:text="#{purchaseQty}"></span></th>
+					<th><span th:text="#{purchaseDateTime}"></span></th>
+					<th></th>
+				</tr>
+				<tr th:each="history : ${purchaseHistoryList}">
+					<td><span th:text="${history.productName}"></span></td>
+					<td align="right">\<span th:text="${history.price} >= 1000? ${#numbers.formatInteger(history.price, 3, 'COMMA')}: ${history.price}"></span></td>
+					<td align="right" class="ps-lg-3"><span th:text="${history.purchaseQty}"></span></td>
+					<td><span th:text="${history.purchaseDateTime}"></span></td>
+					<td>
+						<form th:action="@{/purchase-history-list}" method="post">
+							<!-- 購入IDを渡す -->
+							<input type="hidden" name="purchaseId" th:value="${history.purchaseId}">
+							<input type="submit" name="delete" value="削除" class="btn btn-primary">
+							<span th:if="${history.deleteFlag == 0 && history.purchaseQty <= history.quantity} ">
+								<!-- 購入数を渡す -->
+								<input type="hidden" name="purchaseQty" th:value="${history.purchaseQty}">
+								<!-- 商品ID を渡す-->
+								<input type="hidden" name="productId" th:value="${history.productId}">
+								<!-- 価格を渡す -->
+								<input type="hidden" name="price" th:value="${history.price}">
+								<input type="submit" name="repurchase" value="再購入" class="btn btn-warning">
+								<input type="submit" name="cart" value="カートにいれる" class="btn btn-warning">
+							</span>
+						</form>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<form th:action="@{/purchase-history-list}" method="post">
+			<input type="submit" name="backMenu" value="メニューへ" class="btn btn-warning mt-xl-4">
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/admin.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<title>登録確認</title>
+</head>
+<body>
+	<!-- ヘッダー部 -->
+	<header th:include="common :: pageHeaderAdmin"></header>
+	<!--ヘッダー部終了  -->
+
+
+	<div align="center">
+		<h1>登録確認</h1>
+		<h4><span class="red">※</span>下記の内容で登録します。よろしいですか?</h4>
+		<form th:action="@{/product-register-check}" th:object="${productRegisterForm}" method="post">
+			<table>
+				<tr>
+					<td class="font">・<span th:text="#{productName}"></span> : </td><td class="font"><span th:text="*{productName}"></span></td>
+				</tr>
+				<tr>
+					<td class="font">・<span th:text="#{price}"></span> : </td><td class="font">\<span th:text="*{price} >= 1000? ${#numbers.formatInteger(productRegisterForm.price, 3, 'COMMA')}: *{price}"></span></td>
+				</tr>
+				<tr>
+					<td class="font">・<span th:text="#{genre}"></span> : </td><td class="font"><span th:text="*{genreName}"></span></td>
+				</tr>
+				<tr>
+					<td class="font">・<span th:text="#{quantity}"></span> : </td><td class="font"><span th:text="*{quantity}"></span></td>
+				</tr>
+			</table>
+
+			<input type="submit" name="backRegister" value="戻る" class="btn btn-warning mt-xl-3 me-xl-2">
+			<input type="submit" name="register" value="登録" class="btn btn-warning mt-xl-3 ms-xl-2">
+		</form>
+	</div>
+</body>
+</html>

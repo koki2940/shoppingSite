@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/general.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<script type="text/javascript" th:src="@{/js/cartCheck.js}"></script>
+<title>カート確認</title>
+</head>
+<body>
+	<!-- ヘッダー部 -->
+	<header th:include="common :: pageHeaderGeneral"></header>
+	<!--ヘッダー部終了  -->
+
+	<div align="center">
+		<!-- カート内に商品がなかった場合 -->
+		<p th:if="${cartList.size()} == 0" class="not-data">商品はありません</p>
+
+		<!-- カート内に商品がある場合 -->
+		<div th:if="${cartList.size()} != 0">
+			<!-- 合計金額を表示 -->
+			<p class="total-amount-position">合計\<span th:text="${totalAmount} >= 1000? ${#numbers.formatInteger(totalAmount, 3, 'COMMA')}: ${totalAmount}" 	class="total-amount-color"></span></p>
+
+			<!-- エラーメッセージ -->
+			<p th:if="${errorList} != null">
+				<span th:each="errorMsg : *{errorList}" class="error-message">
+					<span th:text="${errorMsg}"></span><br>
+				</span>
+			</p>
+
+			<!-- 警告メッセージ -->
+			<p class="alert-text"><span class="red">※</span>購入数を変更する場合は一度カートから削除し、再度商品をカートにいれてください</p>
+			<p th:if="${priceAlertMsg} != null">
+				<span class="alert-text red"><span th:text="${priceAlertMsg}"></span></span>
+			</p>
+
+			<table class="border">
+				<tr>
+					<th><span th:text="#{productName}"></span></th>
+					<th><span th:text="#{price}"></span></th>
+					<th><span th:text="#{purchaseQty}"></span></th>
+					<th></th>
+				</tr>
+				<tr th:each="cart : ${cartList}">
+					<td><span th:text="${cart.productName}"></span></td>
+					<td align="right">\<span th:text="${cart.price} >= 1000? ${#numbers.formatInteger(cart.price, 3, 'COMMA')}: ${cart.price}"></span></td>
+					<td align="right"><span th:text="${cart.purchaseQty}"></span></td>
+					<td>
+						<form th:action="@{/cart-product-delete}" method="post">
+							<!-- カートIDを渡す -->
+							<input type="hidden" name="cartId" th:value="${cart.cartId}">
+							<input type="submit" name="delete" value="削除" class="btn btn-primary">
+						</form>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<form th:action="@{/cart-product-purchase}" method="post">
+			<input type="submit" name="backGeneralUserMenu" value="メニューへ" class="btn btn-warning mt-xl-3 me-xl-2">
+			<!-- カート内に商品がある場合 -->
+			<span th:if="${cartList.size()}!=0">
+				<input type="submit" name="purchase" value="購入" class="btn btn-warning mt-xl-3 ms-xl-2">
+				<input type="submit" name="deleteCart" value="カートを空にする" class="btn btn-warning mt-xl-3 ms-xl-2">
+			</span>
+			<!-- カート内に商品がない場合 -->
+			<span th:if="${cartList.size()}==0">
+				<input type="submit" name="purchase" value="購入" class="btn btn-warning mt-xl-3 ms-xl-2" disabled>
+			</span>
+		</form>
+	</div>
+</body>
+</html>

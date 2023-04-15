@@ -1,0 +1,57 @@
+@charset "UTF-8";
+.body{
+    border: 2px solid black;
+    margin-right: 300px;
+    margin-left: 300px;
+    margin-top : 50px;
+    padding-bottom : 50px;
+}
+
+.error-messages {
+	background-color : #FFFF00 ;
+	border: 1px solid #000;
+	text-align: left;
+	font-weight: bold;
+	padding-left: 10px;
+	width : 500px;
+	color: #FF0000;
+}
+
+h1{
+
+	color: #FFCC33;
+}
+
+.red{
+	color:red;
+}
+
+.padding{
+	padding-right:100px;
+}
+
+.font{
+	font-size:30px;
+}
+
+.font2{
+	color:red;
+	font-size:30px;
+	font-weight:bold;
+
+}
+
+.font-weight{
+	font-weight: bold;
+}
+
+.relative1{
+	position: relative;
+	right: 10px;
+	font-size:20px;
+}
+
+
+
+
+

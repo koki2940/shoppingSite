@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/admin.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<title>商品登録</title>
+</head>
+<body>
+	<!-- ヘッダー部 -->
+	<header th:include="common :: pageHeaderAdmin"></header>
+	<!--ヘッダー部終了  -->
+
+	<div align="center">
+		<h1>商品登録</h1>
+		<h3><span class="red">※</span>は必須項目です</h3>
+
+		<form th:action="@{/product-register}" th:object="${productRegisterForm}" method="post">
+			<!-- エラー表示 -->
+			<p th:errors="*{all}" class="error-messages"></p>
+			<table>
+				<tr>
+					<td class="relative1"><span th:text="#{productName}"></span><span class="red">※</span></td>
+					<td><input type="text" th:field="*{productName}"  class="my-xl-3"></td>
+				</tr>
+				<tr>
+					<td class="relative1"><span th:text="#{price}"></span><span class="red">※</span></td>
+					<td><input type="number" th:field="*{price}"  min="0" max="999999999" size="5" class="mb-xl-3"></td>
+				</tr>
+				<tr>
+					<td class="relative1"><span th:text="#{genre}"></span><span class="red">※</span></td>
+					<td>
+						<select th:field="*{genre}"><option value=""></option>
+							<option th:each="genre : *{getGenreMap()}" th:value="${genre.key}"	th:text="${genre.value}"></option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="relative1"><span th:text="#{quantity}"></span><span class="red">※</span></td>
+					<td><input type="number" th:field="*{quantity}" maxlength="3" min ="1" max="999" class="mt-xl-3"></td>
+				</tr>
+			</table>
+
+			<input type="submit" name="backMenu" value="メニューへ" class="btn btn-warning mt-xl-4  me-xl-2">
+			<input type="submit" name="check" value="確認" class="btn btn-warning mt-xl-4  ms-xl-2">
+		</form>
+	</div>
+</body>
+</html>
